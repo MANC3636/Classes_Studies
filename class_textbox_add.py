@@ -47,7 +47,6 @@ while running:
             if collision2==True and pg.mouse.get_pressed():
                 screen.blit(price_surface2, (dict_screen["WIDTH"]-50, 75))
                 customer_list.append(4.50)
-
     #draw
     screen.fill((100,100,199))
 
