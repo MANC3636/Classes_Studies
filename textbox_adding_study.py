@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+import scratch_15
 WIDTH=500; HEIGHT=500
 pg.init()
 screen=pg.display.set_mode((WIDTH, HEIGHT))
@@ -24,6 +25,7 @@ price_surface2 = font.render("$4.50", True,
                              (55, 30, 99), (0, 0, 0))
 
 running =True
+scratch_15.show_start_screen("start")
 while running:
     mouse_loc = pg.mouse.get_pos()
     collision1 = pg.Rect.collidepoint(text_rect, mouse_loc)
