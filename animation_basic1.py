@@ -21,7 +21,7 @@ class Animated():
         self.anime_max=len(self.loaded_pics)-1
 
     def update(self, screen):
-
+        for x in "limited ranges":
             self.image=self.loaded_pics[self.anime_pos]
             if self.anime_pos==self.anime_max:
                 self.anime_pos=0

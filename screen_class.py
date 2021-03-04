@@ -1,6 +1,6 @@
 import pygame as pg
 import sys
-from animation_basic import Animated
+from animation_basic1 import Animated
 #------------------values-------------------------------------
 dict_screen={"WIDTH": 500, "HEIGHT":500}
 

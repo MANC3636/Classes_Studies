@@ -1,9 +1,13 @@
 import pygame as pg
 import sys
+
+"""this is a study in placing one screen into another, as well as
+an animation study"""
+
 #------------------values-------------------------------------
 dict_screen={"WIDTH": 500, "HEIGHT":500}
 
-FPS=20
+FPS=10
 clock=pg.time.Clock()
 pg.font.init()
 px_font=pg.font.SysFont("arial", 15)
@@ -24,8 +28,9 @@ class Textbox:
 
 def show_start_screen(text):
     pg.init()
+    anime=Animated()
     start_screen=pg.display.set_mode((500,500))
-    start_screen.fill((250,0,250))
+    start_screen.fill((250,0,250))#magenta
     box1=Textbox(dict_screen["WIDTH"] / 3, dict_screen["HEIGHT"] / 3, text)
     func=box1.text_surface_func((23,78,99))
     font=pg.font.SysFont("arial", 20)
@@ -33,7 +38,10 @@ def show_start_screen(text):
     #start_screen.blit(func[0], func[1])
     waiting =True
     while waiting:
+        clock.tick(FPS)
         start_screen.blit(text_surf, (100,100))
+        if text=="bye1":
+            anime.update(start_screen)
         pg.display.flip()
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -42,9 +50,38 @@ def show_start_screen(text):
                 waiting = False
                 print("working")
 
+
+
+class Animated:
+    def __init__(self):
+        self.x=200
+        self.y=100
+        self.anime_screen=pg.display.set_mode((100,100), pg.SRCALPHA)#transparent surf
+        #load images into a list
+        self.list_of_pics = ["run1.png", "run2.png", "run2.png"]
+        self.loaded_pics = [pg.image.load(pic) for pic in self.list_of_pics]
+        self.anime_pos=0
+        self.image=self.loaded_pics[self.anime_pos]
+        self.anime_max=len(self.loaded_pics)-1
+
+    def update(self, screen):
+
+        self.image=self.loaded_pics[self.anime_pos]
+        if self.anime_pos==self.anime_max:
+            self.anime_pos=0
+        else:self.anime_pos+=1
+        print(id(self.image))
+        screen.blit(self.anime_screen, (200, 100))
+        #self.anime_screen.fill((100,100,100))
+        self.anime_screen.blit(self.image, (self.x, self.y))
+        pg.display.flip()
+
+
+
 class Game:
     def __init__(self):
         pg.init()
+
         self.screen = pg.display.set_mode((dict_screen["WIDTH"], dict_screen["HEIGHT"]))
         self.text_box_250 = Textbox(20, 50, "2.50")
         self.text_box_450 = Textbox(20, 70, "4.50")
@@ -58,6 +95,7 @@ class Game:
         running =True
 
         while running:
+            clock.tick(FPS)
             mouse_loc = pg.mouse.get_pos()
             collision1 = pg.Rect.collidepoint(self.text_rect250, (mouse_loc[0], mouse_loc[1]))
             collision2 = pg.Rect.collidepoint(self.text_rect450, (mouse_loc[0], mouse_loc[1]))
@@ -79,9 +117,12 @@ class Game:
             self.screen.blit(self.text_surface450, self.text_rect450)
 
             price_sum=sum(customer_list)
+            if price_sum>10:
+                show_start_screen("bye1")
             price_sum_surface=px_font.render(str(price_sum), True, (255, 100, 100))
 
             self.screen.blit(price_sum_surface, (dict_screen["WIDTH"]-50, 100))
+
             #prep to redraw
             pg.display.flip()
 
