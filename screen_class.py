@@ -38,9 +38,9 @@ def show_start_screen(text):
         clock.tick(FPS)
         start_screen.blit(text_surf, (100,100))
         if text=="bye":
-            box2=Textbox(100,300,"You went over $10")
-            func2=box2.text_surface_func((255,0,0))
-            start_screen.blit(func2[0], func2[1])
+            box2=Textbox(100,300,"You went over $10")#1get my font, text loc, & text
+            func2=box2.text_surface_func((255,0,0))#2get my text surf obj and my text rect
+            start_screen.blit(func2[0], func2[1])#3 blit my text surf obj on the screen at the text rect
         pg.display.flip()
         for event in pg.event.get():
             if event.type == pg.QUIT:
