@@ -25,7 +25,7 @@ class Textbox:
 
 def show_start_screen(text):
     pg.init()
-    anime=Animated()
+
     start_screen=pg.display.set_mode((500,500))
     start_screen.fill((250,0,250))
     box1=Textbox(dict_screen["WIDTH"] / 3, dict_screen["HEIGHT"] / 3, text)
@@ -38,7 +38,9 @@ def show_start_screen(text):
         clock.tick(FPS)
         start_screen.blit(text_surf, (100,100))
         if text=="bye":
-            anime.update(start_screen)
+            box2=Textbox(100,300,"You went over $10")
+            func2=box2.text_surface_func((255,0,0))
+            start_screen.blit(func2[0], func2[1])
         pg.display.flip()
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -116,6 +118,8 @@ class Game:
                 # self.running_man.update(self.screen)
                 # pg.time.delay(1000)
                 show_start_screen("bye")
+
+
             price_sum_surface=px_font.render(str(price_sum), True, (255, 100, 100))
 
             self.screen.blit(price_sum_surface, (dict_screen["WIDTH"]-50, 100))
